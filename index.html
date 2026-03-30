@@ -3,121 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم الكرتون - Cartoon World</title>
+    <title>كرتون بلس - وجهتك للأنمي</title>
     <style>
         :root {
             --primary: #e50914;
             --bg: #141414;
-            --card-bg: #2f2f2f;
+            --card-bg: #181818;
+            --text: #ffffff;
         }
         body {
             background-color: var(--bg);
-            color: white;
+            color: var(--text);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
+            overflow-x: hidden;
         }
-        /* الشريط العلوي */
         header {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 10%, transparent);
-            padding: 20px 4%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: fixed;
-            width: 92%;
+            width: 90%;
             z-index: 1000;
         }
-        .logo { color: var(--primary); font-size: 28px; font-weight: bold; text-decoration: none; }
+        .logo { color: var(--primary); font-size: 30px; font-weight: bold; text-decoration: none; }
         .search-bar {
-            background: rgba(0,0,0,0.75);
-            border: 1px solid white;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #444;
             color: white;
-            padding: 7px 15px;
-            border-radius: 4px;
-            width: 250px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            width: 200px;
+            outline: none;
         }
 
-        /* القسم الرئيسي (البانر) */
         .hero {
-            height: 70vh;
-            background: linear-gradient(to right, var(--bg) 10%, transparent), url('https://images.alphacoders.com/605/605592.jpg');
+            height: 80vh;
+            background: linear-gradient(to top, var(--bg) 5%, transparent 40%), 
+                        linear-gradient(to right, var(--bg) 20%, transparent),
+                        url('https://wallpapercave.com/wp/wp1810629.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
             align-items: center;
-            padding: 0 4%;
+            padding: 0 5%;
         }
-        .hero-content h1 { font-size: 3rem; margin-bottom: 10px; }
-        .hero-content p { max-width: 500px; font-size: 1.2rem; margin-bottom: 20px; color: #ccc; }
+        .hero-content h1 { font-size: 4rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        .hero-content p { max-width: 550px; font-size: 1.2rem; color: #e5e5e5; margin: 20px 0; }
         .btn {
-            padding: 10px 25px;
+            padding: 12px 30px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            margin-left: 10px;
+            transition: 0.3s;
         }
-        .btn-play { background-color: white; color: black; }
-        .btn-info { background-color: rgba(109, 109, 110, 0.7); color: white; }
+        .btn-play { background: white; color: black; margin-left: 10px; }
+        .btn-play:hover { background: #dcdcdc; }
 
-        /* شبكة الكرتون */
-        .content-section { padding: 40px 4%; }
+        .content-section { padding: 30px 5%; }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
         }
         .card {
             background: var(--card-bg);
-            border-radius: 4px;
+            border-radius: 8px;
             overflow: hidden;
-            transition: transform 0.3s;
+            transition: 0.4s ease;
             cursor: pointer;
-            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
-        .card:hover { transform: scale(1.1); z-index: 10; }
-        .card img { width: 100%; height: 120px; object-fit: cover; }
-        .card-title { padding: 10px; font-size: 14px; text-align: center; }
+        .card:hover { transform: scale(1.08); box-shadow: 0 10px 20px rgba(0,0,0,0.8); }
+        .card img { width: 100%; height: 140px; object-fit: cover; border-bottom: 3px solid var(--primary); }
+        .card-info { padding: 12px; }
+        .card-info h3 { margin: 0; font-size: 16px; color: #fff; }
+        .card-info span { font-size: 12px; color: #b3b3b3; }
+
+        footer { text-align: center; padding: 40px; color: #666; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <header>
         <a href="#" class="logo">كرتون بلس</a>
-        <input type="text" class="search-bar" placeholder="بحث...">
+        <input type="text" class="search-bar" placeholder="ابحث عن كرتون...">
     </header>
 
     <section class="hero">
         <div class="hero-content">
             <h1>ناروتو شيبودن</h1>
-            <p>بعد عامين ونصف من التدريب، يعود ناروتو إلى قريته ليواجه تحديات جديدة ومنظمة الأكاتسكي الغامضة.</p>
-            <button class="btn btn-play">▶ تشغيل</button>
-            <button class="btn btn-info">ⓘ مزيد من المعلومات</button>
+            <p>انطلق مع ناروتو في رحلته الكبرى لحماية القرية واستعادة صديقه ساسكي. مغامرة مليئة بالنينجا والقتالات الأسطورية.</p>
+            <button class="btn btn-play" onclick="alert('سيبدأ التشغيل قريباً!')">▶ شاهد الآن</button>
         </div>
     </section>
 
     <section class="content-section">
-        <h2>أحدث الإضافات</h2>
+        <h2>أحدث الحلقات المضافة</h2>
         <div class="grid">
-            <div class="card">
-                <img src="https://m.media-amazon.com/images/M/MV5BZmQ5NGFiNWEtMmMyMC00YzcwLWIyOTYtMzU1NWUxZTMwOTFlXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg" alt="ناروتو">
-                <div class="card-title">ناروتو شيبودن</div>
+            <div class="card" onclick="location.href='https://www.google.com/search?q=Dragon+Ball+Episodes'">
+                <img src="https://image.api.playstation.com/vulcan/ap/rnd/202207/0513/9B5E9U1588R30n35uH7U67Xj.png" alt="دراغون بول">
+                <div class="card-info">
+                    <h3>دراغون بول سوبر</h3>
+                    <span>مغامرات • قتال</span>
+                </div>
             </div>
-            <div class="card">
-                <img src="https://m.media-amazon.com/images/M/MV5BODcwNWE3OTItMDdmMi00MjhlLTk1MDktNGRkMDA4NDczYWVjXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg" alt="ون بيس">
-                <div class="card-title">ون بيس</div>
+
+            <div class="card" onclick="location.href='https://www.google.com/search?q=One+Piece+Latest+Episode'">
+                <img src="https://cdn.onepiece-cardgame.com/footer_logo.png?v=02" style="background:#222" alt="ون بيس">
+                <div class="card-info">
+                    <h3>ون بيس (One Piece)</h3>
+                    <span>مغامرة • خيال</span>
+                </div>
             </div>
-            <div class="card">
-                <img src="https://m.media-amazon.com/images/M/MV5BN2ZmMjA0ZDMtZDAxMy00ZWRjLWEwYmEtNWY5ZmE5MWMwY2E1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="القناص">
-                <div class="card-title">القناص (Hunter x Hunter)</div>
+
+            <div class="card" onclick="location.href='https://www.google.com/search?q=Hunter+x+Hunter+Episodes'">
+                <img src="https://cdn.9px.cc/picture/600/338/1/60d7055964893799632890.jpg" alt="القناص">
+                <div class="card-info">
+                    <h3>القناص (Hunter x Hunter)</h3>
+                    <span>إثارة • غموض</span>
+                </div>
             </div>
-            <div class="card">
-                <img src="https://m.media-amazon.com/images/M/MV5BMjA3NTYxYTMtMTdjOS00MTNmLWE3YzEtN2I5ZTU1ZmM4OWY3XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg" alt="أبطال الديجيتال">
-                <div class="card-title">أبطال الديجيتال</div>
+
+            <div class="card" onclick="location.href='https://www.google.com/search?q=Detective+Conan+Episodes'">
+                <img src="https://m.media-amazon.com/images/M/MV5BMGI0YzI3OTYtNmI4Ni00ZjYzLWI3N2EtOWI0OTY0Y2I1YjI0XkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg" alt="كونان">
+                <div class="card-info">
+                    <h3>المحقق كونان</h3>
+                    <span>بوليسي • ذكاء</span>
+                </div>
             </div>
         </div>
     </section>
+
+    <footer>
+        &copy; 2026 كرتون بلس - جميع الحقوق محفوظة لـ شاريف داود
+    </footer>
 
 </body>
 </html>
