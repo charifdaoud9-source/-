@@ -3,205 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم ناروتو - الواجهة المشرقة</title>
+    <title>كرتون بلس - ناروتو شيبودن</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        :root {
-            --primary: #ff4500; /* لون ناروتو البرتقالي */
-            --bg: #ffffff;
-            --card-bg: #f8f9fa;
-            --text: #333;
-            --shiny: linear-gradient(45deg, #ff4500, #feb47b, #ff4500);
-        }
+        :root { --primary: #e50914; --bg: #0f0f0f; --card-bg: #1a1a1a; --text: #fff; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding-bottom: 80px; }
+        
+        /* الشريط العلوي المعاد (Navbar) */
+        header { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+        .logo { color: var(--primary); font-size: 26px; font-weight: bold; text-decoration: none; }
+        
+        /* خانة البحث المعادة */
+        .search-bar { background: rgba(255,255,255,0.1); border: 1px solid #333; color: white; padding: 8px 15px; border-radius: 20px; width: 250px; outline: none; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            margin: 0;
-            overflow-x: hidden;
+        /* منطقة الخلفية الكبيرة المعادة (Banner) */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(to top, var(--bg), transparent), 
+                        url('https://wallpapercave.com/wp/wp1810629.jpg'); /* رابط خلفية ناروتو الفخمة */
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; padding: 0 5%;
         }
+        .hero-content h1 { font-size: 3.5rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
 
-        /* تأثيرات براقة في الخلفية */
-        .glow-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(255, 69, 0, 0.05), transparent);
-            z-index: -1;
+        /* منطقة الأيقونة الوحيدة (Grid) */
+        .container { padding: 40px 5%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+
+        /* تصميم الأيقونة النظيف والوحيد */
+        .card {
+            background: var(--card-bg); border-radius: 15px; padding: 40px 20px;
+            text-align: center; cursor: pointer; transition: 0.3s ease;
+            border: 1px solid #333; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); background: #252525; box-shadow: 0 10px 25px rgba(255,0,0,0.2); }
+        .card h3 { margin: 0; font-size: 20px; color: #fff; }
+        .card p { margin-top: 10px; font-size: 14px; color: var(--primary); font-weight: bold; }
 
-        header {
-            padding: 20px 5%;
-            background: white;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            background: var(--shiny);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 20px rgba(255, 69, 0, 0.2);
-        }
-
-        /* قسم ناروتو الرئيسي */
-        .hero-section {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .naruto-main-card {
-            display: inline-block;
-            background: white;
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            border: 2px solid #fff;
-            transition: 0.4s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .naruto-main-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(255, 69, 0, 0.15);
-            border-color: var(--primary);
-        }
-
-        .naruto-icon {
-            font-size: 100px;
-            background: var(--shiny);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-
-        .shiny-btn {
-            background: var(--shiny);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 69, 0, 0.3);
-            transition: 0.3s;
-        }
-
-        .shiny-btn:hover {
-            box-shadow: 0 15px 30px rgba(255, 69, 0, 0.5);
-            transform: scale(1.05);
-        }
-
-        /* مشغل الفيديو المنبثق */
+        /* مشغل الفيديو المنبثق الاحترافي (Popup) */
         #videoOverlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.98);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98); z-index: 2000; justify-content: center; align-items: center;
             flex-direction: column;
         }
+        .custom-player { width: 85%; max-width: 900px; background: #000; border: 2px solid #333; border-radius: 12px; overflow: hidden; position: relative; }
+        .main-video { width: 100%; display: block; }
+        
+        /* أزرار التحكم والتقديم/التأخير */
+        .controls { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 10px; display: flex; align-items: center; gap: 10px; }
+        .progress-bar { width: 100%; height: 6px; background: #444; border-radius: 3px; cursor: pointer; position: relative; }
+        .progress-filled { height: 100%; background: var(--primary); border-radius: 3px; width: 0; }
+        .control-btn { background: none; border: none; color: white; cursor: pointer; padding: 5px; }
+        .control-btn:hover { color: var(--primary); }
+        .material-icons { font-size: 28px; }
 
-        .player-container {
-            width: 90%;
-            max-width: 1000px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            overflow: hidden;
-            border: 5px solid white;
-        }
+        /* أزرار التفاعل (إعجاب/تنزيل...) */
+        .interaction-bar { width: 100%; max-width: 900px; display: flex; justify-content: space-around; padding: 15px 10px; background: rgba(30,30,30,0.7); border-radius: 10px; margin-top: 15px; }
+        .inter-btn { background: none; border: none; color: #aaa; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 13px; text-decoration: none; }
+        .inter-btn:hover { color: #fff; }
+        .inter-btn .material-icons { font-size: 24px; }
+        .inter-btn.active { color: var(--primary); }
 
-        video { width: 100%; display: block; }
-
-        /* شريط أزرار التحكم الفاخر */
-        .interaction-bar {
-            display: flex;
-            justify-content: space-around;
-            padding: 20px;
-            background: #fff;
-            width: 100%;
-            max-width: 1000px;
-            margin-top: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .inter-btn {
-            background: none; border: none; color: #555;
-            cursor: pointer; display: flex; flex-direction: column;
-            align-items: center; gap: 8px; font-weight: 600;
-        }
-
-        .inter-btn:hover { color: var(--primary); }
-        .inter-btn .material-icons { font-size: 30px; }
-
-        .close-btn {
-            position: absolute; top: 20px; right: 20px;
-            background: #eee; border: none; width: 50px; height: 50px;
-            border-radius: 50%; cursor: pointer; font-size: 20px;
-        }
+        .close-player-btn { position: absolute; top: 15px; right: 20px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="glow-bg"></div>
-
     <header>
-        <div class="logo">ناروتو بلس ✨</div>
+        <a href="#" class="logo">كرتون بلس</a>
+        <input type="text" class="search-bar" placeholder="ابحث عن كرتون...">
     </header>
 
-    <section class="hero-section">
-        <div class="naruto-main-card" onclick="openPlayer()">
-            <div class="naruto-icon">🦊</div>
-            <h1 style="color: #333;">ناروتو شيبودن: الحلقة 1</h1>
-            <p style="color: #777; margin-bottom: 30px;">اضغط على الأيقونة لبدء المغامرة البراقة</p>
-            <button class="shiny-btn">شاهد الآن ✨</button>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>ناروتو شيبودن</h1>
+            <p>شاهد الحلقة الأولى المرفوعة الآن بجودة عالية وبدون إعلانات مزعجة.</p>
         </div>
     </section>
 
+    <div class="container">
+        <h2 style="margin-bottom: 30px; border-right: 4px solid var(--primary); padding-right: 15px;">الحلقات المتاحة</h2>
+        <div class="grid">
+            
+            <div class="card" onclick="openPlayer('naruto1.mp4', 'ناروتو شيبودن - الحلقة 1')">
+                <h3>ناروتو شيبودن</h3>
+                <p>▶ شاهد الحلقة</p>
+            </div>
+
+        </div>
+    </div>
+
     <div id="videoOverlay">
-        <button class="close-btn" onclick="closePlayer()">✕</button>
+        <button class="close-player-btn" onclick="closePlayer()">✕</button>
         
-        <div class="player-container">
-            <video id="videoElement" controls>
-                <source src="naruto1.mp4" type="video/mp4">
-            </video>
+        <div class="custom-player">
+            <video id="videoElement" class="main-video">
+                </video>
+            <div class="controls">
+                <div class="progress-bar" onclick="setProgress(event)"><div id="progressFilled" class="progress-filled"></div></div>
+                <button class="control-btn" onclick="togglePlay()"><span id="playIcon" class="material-icons">play_arrow</span></button>
+                <button class="control-btn" onclick="skipVideo(-10)"><span class="material-icons">replay_10</span></button>
+                <button class="control-btn" onclick="skipVideo(10)"><span class="material-icons">forward_10</span></button>
+            </div>
         </div>
 
         <div class="interaction-bar">
             <button class="inter-btn"><span class="material-icons">thumb_up</span>إعجاب</button>
-            <button class="inter-btn"><span class="material-icons">thumb_down</span>ديسلايك</button>
+            <button class="inter-btn"><span class="material-icons">thumb_down</span>لم يعجبني</button>
             <button class="inter-btn"><span class="material-icons">share</span>مشاركة</button>
             <button class="inter-btn"><span class="material-icons">playlist_add</span>حفظ</button>
-            <a href="naruto1.mp4" download class="inter-btn" style="text-decoration:none; color:inherit;">
+            <a id="downloadLink" href="" download class="inter-btn">
                 <span class="material-icons">cloud_download</span>تنزيل
             </a>
         </div>
     </div>
 
     <script>
-        const overlay = document.getElementById('videoOverlay');
         const video = document.getElementById('videoElement');
+        const playIcon = document.getElementById('playIcon');
+        const progressFilled = document.getElementById('progressFilled');
+        const downloadLink = document.getElementById('downloadLink');
 
-        function openPlayer() {
-            overlay.style.display = 'flex';
+        function openPlayer(videoUrl, title) {
+            video.src = videoUrl;
+            downloadLink.href = videoUrl;
+            document.getElementById('videoOverlay').style.display = 'flex';
             video.play();
+            playIcon.textContent = 'pause';
+            video.ontimeupdate = updateProgress;
         }
 
         function closePlayer() {
-            overlay.style.display = 'none';
-            video.pause();
+            document.getElementById('videoOverlay').style.display = 'none';
+            video.pause(); video.src = '';
+        }
+
+        function togglePlay() {
+            if (video.paused) { video.play(); playIcon.textContent = 'pause'; }
+            else { video.pause(); playIcon.textContent = 'play_arrow'; }
+        }
+
+        function skipVideo(seconds) { video.currentTime += seconds; }
+
+        function updateProgress() {
+            const percentage = (video.currentTime / video.duration) * 100;
+            progressFilled.style.width = percentage + '%';
+        }
+
+        function setProgress(e) {
+            const newTime = (e.offsetX / e.target.offsetWidth) * video.duration;
+            video.currentTime = newTime;
         }
     </script>
 
