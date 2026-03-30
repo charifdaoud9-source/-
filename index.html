@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>عالم الكرتون - Cartoon World</title>
+    <style>
+        body { background-color: #121212; color: white; font-family: sans-serif; margin: 0; padding: 20px; }
+        header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #333; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background: #1e1e1e; border-radius: 10px; overflow: hidden; transition: 0.3s; cursor: pointer; }
+        .card:hover { transform: scale(1.05); }
+        .card img { width: 100%; height: 150px; object-fit: cover; }
+        .card h3 { padding: 10px; font-size: 16px; margin: 0; }
+        .search-bar { padding: 10px; border-radius: 20px; border: none; width: 300px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>سبيستون & كرتون</h1>
+        <input type="text" class="search-bar" placeholder="ابحث عن كرتونك المفضل...">
+    </header>
+    <div class="grid">
+        <div class="card">
+            <img src="https://via.placeholder.com/200x150" alt="كرتون 1">
+            <h3>مغامرات أوبيتو</h3>
+        </div>
+        </div>
+</body>
+</html>
