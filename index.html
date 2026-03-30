@@ -3,93 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كرتون بلس - ناروتو شيبودن</title>
+    <title>كرتون بلس - العرض المباشر</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        :root { --primary: #e50914; --bg: #0f0f0f; --card-bg: #1a1a1a; --text: #fff; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding-bottom: 80px; }
+        :root { --primary: #ff4500; --bg: #0a0a0a; --card-bg: #161616; --text: #fff; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; overflow-x: hidden; }
         
-        /* الشريط العلوي المعاد (Navbar) */
-        header { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+        header { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
         .logo { color: var(--primary); font-size: 26px; font-weight: bold; text-decoration: none; }
-        
-        /* خانة البحث المعادة */
-        .search-bar { background: rgba(255,255,255,0.1); border: 1px solid #333; color: white; padding: 8px 15px; border-radius: 20px; width: 250px; outline: none; }
+        .search-bar { background: rgba(255,255,255,0.1); border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 25px; width: 200px; outline: none; }
 
-        /* منطقة الخلفية الكبيرة المعادة (Banner) */
         .hero {
-            height: 60vh;
-            background: linear-gradient(to top, var(--bg), transparent), 
-                        url('https://wallpapercave.com/wp/wp1810629.jpg'); /* رابط خلفية ناروتو الفخمة */
+            height: 55vh;
+            background: linear-gradient(to top, var(--bg), transparent), url('https://wallpapercave.com/wp/wp1810629.jpg');
             background-size: cover; background-position: center;
             display: flex; align-items: center; padding: 0 5%;
         }
-        .hero-content h1 { font-size: 3.5rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        .hero-content h1 { font-size: 3.5rem; margin: 0; text-shadow: 2px 2px 10px #000; color: #fff; }
 
-        /* منطقة الأيقونة الوحيدة (Grid) */
         .container { padding: 40px 5%; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
 
-        /* تصميم الأيقونة النظيف والوحيد */
         .card {
             background: var(--card-bg); border-radius: 15px; padding: 40px 20px;
-            text-align: center; cursor: pointer; transition: 0.3s ease;
-            border: 1px solid #333; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            text-align: center; cursor: pointer; transition: 0.3s;
+            border: 1px solid #333; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
-        .card:hover { transform: translateY(-10px); border-color: var(--primary); background: #252525; box-shadow: 0 10px 25px rgba(255,0,0,0.2); }
-        .card h3 { margin: 0; font-size: 20px; color: #fff; }
+        .card:hover { transform: translateY(-8px); border-color: var(--primary); background: #1f1f1f; }
+        .card h3 { margin: 0; font-size: 20px; }
         .card p { margin-top: 10px; font-size: 14px; color: var(--primary); font-weight: bold; }
 
-        /* مشغل الفيديو المنبثق الاحترافي (Popup) */
+        /* مشغل الفيديو المنبثق الاحترافي */
         #videoOverlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.98); z-index: 2000; justify-content: center; align-items: center;
             flex-direction: column;
         }
-        .custom-player { width: 85%; max-width: 900px; background: #000; border: 2px solid #333; border-radius: 12px; overflow: hidden; position: relative; }
-        .main-video { width: 100%; display: block; }
+        .custom-player { width: 90%; max-width: 850px; background: #000; border: 1px solid #444; border-radius: 10px; overflow: hidden; position: relative; }
+        video { width: 100%; display: block; max-height: 80vh; }
         
-        /* أزرار التحكم والتقديم/التأخير */
-        .controls { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 10px; display: flex; align-items: center; gap: 10px; }
-        .progress-bar { width: 100%; height: 6px; background: #444; border-radius: 3px; cursor: pointer; position: relative; }
-        .progress-filled { height: 100%; background: var(--primary); border-radius: 3px; width: 0; }
-        .control-btn { background: none; border: none; color: white; cursor: pointer; padding: 5px; }
+        .controls { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); padding: 10px; display: flex; align-items: center; gap: 10px; box-sizing: border-box; }
+        .progress-bar { flex-grow: 1; height: 5px; background: #555; border-radius: 5px; cursor: pointer; position: relative; }
+        .progress-filled { height: 100%; background: var(--primary); border-radius: 5px; width: 0; }
+        .control-btn { background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center; }
         .control-btn:hover { color: var(--primary); }
-        .material-icons { font-size: 28px; }
 
-        /* أزرار التفاعل (إعجاب/تنزيل...) */
-        .interaction-bar { width: 100%; max-width: 900px; display: flex; justify-content: space-around; padding: 15px 10px; background: rgba(30,30,30,0.7); border-radius: 10px; margin-top: 15px; }
-        .inter-btn { background: none; border: none; color: #aaa; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 13px; text-decoration: none; }
+        .interaction-bar { width: 90%; max-width: 850px; display: flex; justify-content: space-around; padding: 15px; background: #111; border-radius: 0 0 10px 10px; margin-top: 1px; border: 1px solid #333; }
+        .inter-btn { background: none; border: none; color: #bbb; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 12px; text-decoration: none; }
         .inter-btn:hover { color: #fff; }
         .inter-btn .material-icons { font-size: 24px; }
-        .inter-btn.active { color: var(--primary); }
 
-        .close-player-btn { position: absolute; top: 15px; right: 20px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 20px; }
+        .close-player-btn { position: absolute; top: 20px; right: 25px; background: #333; color: white; border: none; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; font-size: 20px; z-index: 2100; }
     </style>
 </head>
 <body>
 
     <header>
         <a href="#" class="logo">كرتون بلس</a>
-        <input type="text" class="search-bar" placeholder="ابحث عن كرتون...">
+        <input type="text" class="search-bar" placeholder="بحث...">
     </header>
 
     <section class="hero">
         <div class="hero-content">
             <h1>ناروتو شيبودن</h1>
-            <p>شاهد الحلقة الأولى المرفوعة الآن بجودة عالية وبدون إعلانات مزعجة.</p>
+            <p>مشاهدة مباشرة للحلقة الأولى بجودة MP4</p>
         </div>
     </section>
 
     <div class="container">
-        <h2 style="margin-bottom: 30px; border-right: 4px solid var(--primary); padding-right: 15px;">الحلقات المتاحة</h2>
         <div class="grid">
-            
-            <div class="card" onclick="openPlayer('naruto1.mp4', 'ناروتو شيبودن - الحلقة 1')">
+            <div class="card" onclick="openPlayer('naruto1.mp4')">
                 <h3>ناروتو شيبودن</h3>
-                <p>▶ شاهد الحلقة</p>
+                <p>▶ ابدأ المشاهدة</p>
             </div>
-
         </div>
     </div>
 
@@ -97,11 +83,13 @@
         <button class="close-player-btn" onclick="closePlayer()">✕</button>
         
         <div class="custom-player">
-            <video id="videoElement" class="main-video">
-                </video>
+            <video id="videoElement" preload="auto">
+                <source src="" type="video/mp4">
+                متصفحك لا يدعم تشغيل الفيديو.
+            </video>
             <div class="controls">
-                <div class="progress-bar" onclick="setProgress(event)"><div id="progressFilled" class="progress-filled"></div></div>
                 <button class="control-btn" onclick="togglePlay()"><span id="playIcon" class="material-icons">play_arrow</span></button>
+                <div class="progress-bar" onclick="setProgress(event)"><div id="progressFilled" class="progress-filled"></div></div>
                 <button class="control-btn" onclick="skipVideo(-10)"><span class="material-icons">replay_10</span></button>
                 <button class="control-btn" onclick="skipVideo(10)"><span class="material-icons">forward_10</span></button>
             </div>
@@ -109,7 +97,6 @@
 
         <div class="interaction-bar">
             <button class="inter-btn"><span class="material-icons">thumb_up</span>إعجاب</button>
-            <button class="inter-btn"><span class="material-icons">thumb_down</span>لم يعجبني</button>
             <button class="inter-btn"><span class="material-icons">share</span>مشاركة</button>
             <button class="inter-btn"><span class="material-icons">playlist_add</span>حفظ</button>
             <a id="downloadLink" href="" download class="inter-btn">
@@ -124,18 +111,26 @@
         const progressFilled = document.getElementById('progressFilled');
         const downloadLink = document.getElementById('downloadLink');
 
-        function openPlayer(videoUrl, title) {
-            video.src = videoUrl;
-            downloadLink.href = videoUrl;
+        function openPlayer(fileName) {
+            // المسار المباشر للملف في GitHub Pages
+            const videoPath = "./" + fileName;
+            
+            video.src = videoPath;
+            downloadLink.href = videoPath;
+            
             document.getElementById('videoOverlay').style.display = 'flex';
-            video.play();
+            
+            video.load(); // إعادة تحميل المصدر للتأكد
+            video.play().catch(e => console.log("خطأ في التشغيل: ", e));
+            
             playIcon.textContent = 'pause';
             video.ontimeupdate = updateProgress;
         }
 
         function closePlayer() {
             document.getElementById('videoOverlay').style.display = 'none';
-            video.pause(); video.src = '';
+            video.pause();
+            video.src = "";
         }
 
         function togglePlay() {
@@ -143,16 +138,20 @@
             else { video.pause(); playIcon.textContent = 'play_arrow'; }
         }
 
-        function skipVideo(seconds) { video.currentTime += seconds; }
+        function skipVideo(sec) { video.currentTime += sec; }
 
         function updateProgress() {
-            const percentage = (video.currentTime / video.duration) * 100;
-            progressFilled.style.width = percentage + '%';
+            if (video.duration) {
+                const percentage = (video.currentTime / video.duration) * 100;
+                progressFilled.style.width = percentage + '%';
+            }
         }
 
         function setProgress(e) {
-            const newTime = (e.offsetX / e.target.offsetWidth) * video.duration;
-            video.currentTime = newTime;
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percentage = x / rect.width;
+            video.currentTime = percentage * video.duration;
         }
     </script>
 
