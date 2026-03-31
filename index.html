@@ -3,157 +3,441 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كرتون بلس - العرض المباشر</title>
+    <title>كرتون بلس | منصة المشاهدة الأولى</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        :root { --primary: #ff4500; --bg: #0a0a0a; --card-bg: #161616; --text: #fff; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; overflow-x: hidden; }
-        
-        header { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
-        .logo { color: var(--primary); font-size: 26px; font-weight: bold; text-decoration: none; }
-        .search-bar { background: rgba(255,255,255,0.1); border: 1px solid #444; color: white; padding: 8px 15px; border-radius: 25px; width: 200px; outline: none; }
-
-        .hero {
-            height: 55vh;
-            background: linear-gradient(to top, var(--bg), transparent), url('https://wallpapercave.com/wp/wp1810629.jpg');
-            background-size: cover; background-position: center;
-            display: flex; align-items: center; padding: 0 5%;
+        :root {
+            --primary: #e50914;
+            --bg: #050505;
+            --card-bg: #121212;
+            --text: #ffffff;
+            --accent: #ff4500;
         }
-        .hero-content h1 { font-size: 3.5rem; margin: 0; text-shadow: 2px 2px 10px #000; color: #fff; }
 
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* شريط التنقل الثابت */
+        header {
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #222;
+        }
+
+        .logo {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            width: 300px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-bar:focus {
+            width: 400px;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* الخلفية الكبيرة المتغيرة (Hero) */
+        .hero {
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, var(--bg), transparent 50%),
+                        linear-gradient(to right, var(--bg), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+        }
+
+        .hero-content h1 { font-size: 4rem; margin: 0; text-shadow: 2px 2px 20px #000; }
+        .hero-content p { font-size: 1.2rem; color: #ccc; margin: 20px 0; }
+
+        /* التبويبات */
+        .tabs-container {
+            padding: 20px 5%;
+            display: flex;
+            gap: 20px;
+            background: var(--bg);
+            position: sticky;
+            top: 75px;
+            z-index: 900;
+        }
+
+        .tab-btn {
+            background: #222;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* شبكة الحلقات */
         .container { padding: 40px 5%; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+        }
 
         .card {
-            background: var(--card-bg); border-radius: 15px; padding: 40px 20px;
-            text-align: center; cursor: pointer; transition: 0.3s;
-            border: 1px solid #333; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1px solid #222;
+            position: relative;
         }
-        .card:hover { transform: translateY(-8px); border-color: var(--primary); background: #1f1f1f; }
-        .card h3 { margin: 0; font-size: 20px; }
-        .card p { margin-top: 10px; font-size: 14px; color: var(--primary); font-weight: bold; }
 
-        /* مشغل الفيديو المنبثق الاحترافي */
-        #videoOverlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98); z-index: 2000; justify-content: center; align-items: center;
+        .card:hover {
+            transform: scale(1.1);
+            z-index: 100;
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .card-img {
+            height: 140px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .card-info { padding: 15px; }
+        .card-info h3 { margin: 0; font-size: 16px; }
+        .card-info p { color: #888; font-size: 12px; margin-top: 5px; }
+
+        /* صفحة المشاهدة الكاملة */
+        #playerPage {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .player-header {
+            padding: 10px 5%;
+            background: #111;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn { background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center; }
+
+        .video-wrapper {
+            width: 100%;
+            background: #000;
+            display: flex;
             flex-direction: column;
+            align-items: center;
         }
-        .custom-player { width: 90%; max-width: 850px; background: #000; border: 1px solid #444; border-radius: 10px; overflow: hidden; position: relative; }
-        video { width: 100%; display: block; max-height: 80vh; }
-        
-        .controls { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); padding: 10px; display: flex; align-items: center; gap: 10px; box-sizing: border-box; }
-        .progress-bar { flex-grow: 1; height: 5px; background: #555; border-radius: 5px; cursor: pointer; position: relative; }
-        .progress-filled { height: 100%; background: var(--primary); border-radius: 5px; width: 0; }
-        .control-btn { background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center; }
-        .control-btn:hover { color: var(--primary); }
 
-        .interaction-bar { width: 90%; max-width: 850px; display: flex; justify-content: space-around; padding: 15px; background: #111; border-radius: 0 0 10px 10px; margin-top: 1px; border: 1px solid #333; }
-        .inter-btn { background: none; border: none; color: #bbb; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 12px; text-decoration: none; }
-        .inter-btn:hover { color: #fff; }
-        .inter-btn .material-icons { font-size: 24px; }
+        iframe {
+            width: 90%;
+            height: 80vh;
+            border: none;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+        }
 
-        .close-player-btn { position: absolute; top: 20px; right: 25px; background: #333; color: white; border: none; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; font-size: 20px; z-index: 2100; }
+        /* التفاعل والتعليقات */
+        .interaction-section {
+            width: 90%;
+            padding: 30px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .action-btns { display: flex; gap: 20px; }
+        .btn-action { background: #222; border: none; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .btn-action:hover { background: #333; }
+        .btn-action.liked { color: var(--primary); }
+
+        .description-box { background: #111; padding: 20px; border-radius: 10px; line-height: 1.6; }
+
+        .comments-section { margin-top: 40px; }
+        .comment-input-area { display: flex; gap: 15px; margin-bottom: 30px; }
+        .comment-input-area input { flex: 1; background: none; border: none; border-bottom: 1px solid #444; color: white; padding: 10px; outline: none; }
+        .comment-input-area input:focus { border-bottom-color: var(--primary); }
+
+        .comment { display: flex; gap: 15px; margin-bottom: 20px; }
+        .user-avatar { width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .comment-content h4 { margin: 0; font-size: 14px; }
+        .comment-content p { margin: 5px 0; color: #ccc; }
+
+        /* ميزة إغلاق الإضاءة */
+        .dimmer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 1999; display: none; }
     </style>
 </head>
 <body>
 
+    <div class="dimmer" id="dimmer"></div>
+
     <header>
         <a href="#" class="logo">كرتون بلس</a>
-        <input type="text" class="search-bar" placeholder="بحث...">
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="ابحث عن مسلسلك المفضل...">
+        </div>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="heroBanner">
         <div class="hero-content">
-            <h1>ناروتو شيبودن</h1>
-            <p>مشاهدة مباشرة للحلقة الأولى بجودة MP4</p>
+            <h1 id="heroTitle">ناروتو شيبودن</h1>
+            <p id="heroDesc">بعد عامين ونصف من التدريب، يعود ناروتو إلى قريته ليواجه تحديات جديدة ومنظمة الأكاتسكي الغامضة.</p>
+            <button class="tab-btn active" style="padding: 15px 40px; font-size: 18px;" onclick="openLatest()">شاهد أحدث حلقة</button>
         </div>
     </section>
 
-    <div class="container">
-        <div class="grid">
-            <div class="card" onclick="openPlayer('naruto1.mp4')">
-                <h3>ناروتو شيبودن</h3>
-                <p>▶ ابدأ المشاهدة</p>
-            </div>
-        </div>
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="filterContent('all', this)">الكل</button>
+        <button class="tab-btn" onclick="filterContent('naruto', this)">ناروتو</button>
+        <button class="tab-btn" onclick="filterContent('onepiece', this)">ون بيس</button>
+        <button class="tab-btn" onclick="filterContent('gumball', this)">غامبول</button>
+        <button class="tab-btn" onclick="filterContent('doraemon', this)">دورايمون</button>
     </div>
 
-    <div id="videoOverlay">
-        <button class="close-player-btn" onclick="closePlayer()">✕</button>
-        
-        <div class="custom-player">
-            <video id="videoElement" preload="auto">
-                <source src="" type="video/mp4">
-                متصفحك لا يدعم تشغيل الفيديو.
-            </video>
-            <div class="controls">
-                <button class="control-btn" onclick="togglePlay()"><span id="playIcon" class="material-icons">play_arrow</span></button>
-                <div class="progress-bar" onclick="setProgress(event)"><div id="progressFilled" class="progress-filled"></div></div>
-                <button class="control-btn" onclick="skipVideo(-10)"><span class="material-icons">replay_10</span></button>
-                <button class="control-btn" onclick="skipVideo(10)"><span class="material-icons">forward_10</span></button>
+    <div class="container">
+        <div class="grid" id="mainGrid">
             </div>
+    </div>
+
+    <div id="playerPage">
+        <div class="player-header">
+            <button class="back-btn" onclick="closePlayer()">
+                <span class="material-icons">arrow_forward</span> العودة للملفات
+            </button>
+            <h2 id="videoTitleDisplay">اسم الحلقة</h2>
+            <button class="btn-action" style="margin-right: auto;" onclick="toggleLight()">
+                <span class="material-icons">lightbulb</span> إغلاق الإضاءة
+            </button>
         </div>
 
-        <div class="interaction-bar">
-            <button class="inter-btn"><span class="material-icons">thumb_up</span>إعجاب</button>
-            <button class="inter-btn"><span class="material-icons">share</span>مشاركة</button>
-            <button class="inter-btn"><span class="material-icons">playlist_add</span>حفظ</button>
-            <a id="downloadLink" href="" download class="inter-btn">
-                <span class="material-icons">cloud_download</span>تنزيل
-            </a>
+        <div class="video-wrapper">
+            <iframe id="mainIframe" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            
+            <div class="interaction-section">
+                <div class="stats-bar">
+                    <div style="font-size: 20px; font-weight: bold;">التحكم والتفاعل</div>
+                    <div class="action-btns">
+                        <button class="btn-action" onclick="likeVideo(this)">
+                            <span class="material-icons">thumb_up</span> <span id="likeCount">1.2K</span>
+                        </button>
+                        <button class="btn-action" onclick="addToFav()">
+                            <span class="material-icons">favorite_border</span> المفضلات
+                        </button>
+                        <button class="btn-action" onclick="shareVideo()">
+                            <span class="material-icons">share</span> مشاركة
+                        </button>
+                        <a id="downloadBtn" href="#" download class="btn-action" style="text-decoration:none">
+                            <span class="material-icons">download</span> تنزيل فوري
+                        </a>
+                    </div>
+                </div>
+
+                <div class="description-box">
+                    <h3 style="margin-top: 0;">الوصف</h3>
+                    <p id="videoDescDisplay">جاري تحميل الوصف المخصص لهذه الحلقة...</p>
+                </div>
+
+                <div class="comments-section">
+                    <h3>التعليقات (24)</h3>
+                    <div class="comment-input-area">
+                        <div class="user-avatar">ش</div>
+                        <input type="text" placeholder="أضف تعليقاً فخماً...">
+                    </div>
+                    
+                    <div id="commentsList">
+                        <div class="comment">
+                            <div class="user-avatar" style="background: #555;">م</div>
+                            <div class="comment-content">
+                                <h4>محمد الجزائري</h4>
+                                <p>هذه أفضل جودة رأيتها على الإطلاق! شكراً لك.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        const video = document.getElementById('videoElement');
-        const playIcon = document.getElementById('playIcon');
-        const progressFilled = document.getElementById('progressFilled');
-        const downloadLink = document.getElementById('downloadLink');
+        // بيانات الحلقات الـ 20
+        const episodes = [
+            // ناروتو (5 حلقات)
+            { id: 'n1', cat: 'naruto', title: 'ناروتو شيبودن: العودة إلى الوطن', url: 'https://www.youtube.com/embed/QY_oMofN_m0', desc: 'تبدأ قصة نينجا كونوها بعد غياب طويل، حيث يلتقي الأصدقاء وتستعد القرية لتهديدات الأكاتسكي القادمة.' },
+            { id: 'n2', cat: 'naruto', title: 'ناروتو شيبودن: الهجوم المفاجئ', url: 'https://www.youtube.com/embed/S2p_vU29K6w', desc: 'القوى الغامضة تتحرك، والمعارك تشتد بين النينجا لحماية القرى المخفية.' },
+            { id: 'n3', cat: 'naruto', title: 'ناروتو شيبودن: سر القوة', url: 'https://www.youtube.com/embed/m9un6pT020Q', desc: 'يكتشف ناروتو أعماقاً جديدة لقوته الداخلية في مواجهة أعداء لا يرحمون.' },
+            { id: 'n4', cat: 'naruto', title: 'ناروتو شيبودن: ذكريات النينجا', url: 'https://www.youtube.com/embed/N-0_D9m8i4c', desc: 'رحلة في الماضي تكشف الأسرار المدفونة وراء دافع كل نينجا.' },
+            { id: 'n5', cat: 'naruto', title: 'ناروتو شيبودن: بداية الحرب', url: 'https://www.youtube.com/embed/QY_oMofN_m0', desc: 'تتجمع القوى وتتشكل التحالفات استعداداً لمواجهة كبرى ستغير وجه العالم.' },
+            
+            // غامبول (5 حلقات)
+            { id: 'g1', cat: 'gumball', title: 'عالم غامبول المدهش: الفوضى', url: 'https://www.youtube.com/embed/N-0_D9m8i4c', desc: 'غامبول وداروين يقلبان المدينة رأساً على عقب في مغامرة كوميدية لا تنتهي.' },
+            { id: 'g2', cat: 'gumball', title: 'عالم غامبول المدهش: الاختبار', url: 'https://www.youtube.com/embed/m9un6pT020Q', desc: 'محاولات فاشلة ومضحكة للدراسة تنتهي بكوارث طبيعية داخل الفصل الدراسي.' },
+            { id: 'g3', cat: 'gumball', title: 'عالم غامبول المدهش: السر', url: 'https://www.youtube.com/embed/S2p_vU29K6w', desc: 'سر غامبول الصغير يصبح حديث المدينة، مما يوقعه في مواقف محرجة.' },
+            { id: 'g4', cat: 'gumball', title: 'عالم غامبول المدهش: الصداقة', url: 'https://www.youtube.com/embed/QY_oMofN_m0', desc: 'داروين يثبت وفاءه بطرق غريبة جداً تختبر صبر غامبول وعائلته.' },
+            { id: 'g5', cat: 'gumball', title: 'عالم غامبول المدهش: المستقبل', url: 'https://www.youtube.com/embed/N-0_D9m8i4c', desc: 'تخيلات مجنونة حول المستقبل تقود الثنائي لمواجهة نسخهم المستقبلية.' },
 
-        function openPlayer(fileName) {
-            // المسار المباشر للملف في GitHub Pages
-            const videoPath = "./" + fileName;
-            
-            video.src = videoPath;
-            downloadLink.href = videoPath;
-            
-            document.getElementById('videoOverlay').style.display = 'flex';
-            
-            video.load(); // إعادة تحميل المصدر للتأكد
-            video.play().catch(e => console.log("خطأ في التشغيل: ", e));
-            
-            playIcon.textContent = 'pause';
-            video.ontimeupdate = updateProgress;
+            // ون بيس (5 حلقات)
+            { id: 'o1', cat: 'onepiece', title: 'ون بيس: فجر المغامرة', url: 'https://www.youtube.com/embed/S2p_vU29K6w', desc: 'لوفي يبدأ رحلته في البحار بحثاً عن الكنز الأسطوري ون بيس ليصبح ملك القراصنة.' },
+            { id: 'o2', cat: 'onepiece', title: 'ون بيس: طاقم قبعة القش', url: 'https://www.youtube.com/embed/m9un6pT020Q', desc: 'جمع الحلفاء وتشكيل الطاقم الأول لمواجهة عواصف الجراند لاين.' },
+            { id: 'o3', cat: 'onepiece', title: 'ون بيس: معركة الغراند لاين', url: 'https://www.youtube.com/embed/QY_oMofN_m0', desc: 'المخاطر تزداد والأعداء يصبحون أقوى مع دخول لوفي ومن معه للمنطقة الأخطر.' },
+            { id: 'o4', cat: 'onepiece', title: 'ون بيس: العدالة والحرية', url: 'https://www.youtube.com/embed/N-0_D9m8i4c', desc: 'مواجهة مباشرة مع قوى البحرية التي تحاول إيقاف زحف القراصنة الصاعدين.' },
+            { id: 'o5', cat: 'onepiece', title: 'ون بيس: الكنز المخفي', url: 'https://www.youtube.com/embed/S2p_vU29K6w', desc: 'تلميحات جديدة حول مكان الون بيس تقود الطاقم إلى جزيرة مهجورة وغامضة.' },
+
+            // دورايمون (5 حلقات)
+            { id: 'd1', cat: 'doraemon', title: 'دورايمون: عالم الفنون', url: 'https://www.youtube.com/embed/m9un6pT020Q', desc: 'نوبيتا يستخدم أدوات دورايمون السحرية ليصبح أعظم فنان في التاريخ بلمح البصر.' },
+            { id: 'd2', cat: 'doraemon', title: 'دورايمون: رحلة عبر الزمن', url: 'https://www.youtube.com/embed/QY_oMofN_m0', desc: 'مغامرة مشوقة إلى المستقبل لإصلاح خطأ فادح ارتكبه نوبيتا في واجبه المنزلي.' },
+            { id: 'd3', cat: 'doraemon', title: 'دورايمون: الحقيبة العجيبة', url: 'https://www.youtube.com/embed/N-0_D9m8i4c', desc: 'مجموعة من الأدوات الجديدة تخرج عن السيطرة وتسبب فوضى عارمة في الحي.' },
+            { id: 'd4', cat: 'doraemon', title: 'دورايمون: نوبيتا الشجاع', url: 'https://www.youtube.com/embed/S2p_vU29K6w', desc: 'نوبيتا يحصل على شجاعة خارقة لمواجهة المتنمرين، ولكن للسر ثمن باهظ.' },
+            { id: 'd5', cat: 'doraemon', title: 'دورايمون: صداقة للأبد', url: 'https://www.youtube.com/embed/m9un6pT020Q', desc: 'قصة مؤثرة عن رابطة الصداقة بين الروبوت القادم من المستقبل ونوبيتا.' }
+        ];
+
+        const heroImgs = [
+            'https://wallpapercave.com/wp/wp1810629.jpg', // Naruto
+            'https://wallpapercave.com/wp/wp1852230.jpg', // One Piece
+            'https://wallpaperaccess.com/full/332219.jpg'  // Gumball
+        ];
+
+        let currentHeroIdx = 0;
+
+        // توليد الحلقات في الشبكة
+        function renderEpisodes(data) {
+            const grid = document.getElementById('mainGrid');
+            grid.innerHTML = '';
+            data.forEach(ep => {
+                const icon = ep.cat === 'naruto' ? '🦊' : (ep.cat === 'onepiece' ? '🏴‍☠️' : (ep.cat === 'gumball' ? '🐱' : '🐱'));
+                grid.innerHTML += `
+                    <div class="card" onclick="openPlayer('${ep.url}', '${ep.title}', '${ep.desc}')">
+                        <div class="card-img">${icon}</div>
+                        <div class="card-info">
+                            <h3>${ep.title}</h3>
+                            <p>${ep.desc.substring(0, 50)}...</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // فلترة المحتوى
+        function filterContent(category, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if (category === 'all') renderEpisodes(episodes);
+            else renderEpisodes(episodes.filter(e => e.cat === category));
+        }
+
+        // تشغيل الفيديو
+        function openPlayer(url, title, desc) {
+            // إضافة التحكم بالوقت عبر الرابط (يوتيوب يدعم ذلك برمجياً عبر الـ UI)
+            document.getElementById('mainIframe').src = url + "?autoplay=1&rel=0&modestbranding=1";
+            document.getElementById('videoTitleDisplay').innerText = title;
+            document.getElementById('videoDescDisplay').innerText = desc;
+            document.getElementById('downloadBtn').href = url.replace('embed/', 'watch?v=');
+            document.getElementById('playerPage').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
         function closePlayer() {
-            document.getElementById('videoOverlay').style.display = 'none';
-            video.pause();
-            video.src = "";
+            document.getElementById('playerPage').style.display = 'none';
+            document.getElementById('mainIframe').src = '';
+            document.body.style.overflow = 'auto';
+            document.getElementById('dimmer').style.display = 'none';
         }
 
-        function togglePlay() {
-            if (video.paused) { video.play(); playIcon.textContent = 'pause'; }
-            else { video.pause(); playIcon.textContent = 'play_arrow'; }
+        // تغيير الهيرو تلقائياً
+        setInterval(() => {
+            currentHeroIdx = (currentHeroIdx + 1) % heroImgs.length;
+            document.getElementById('heroBanner').style.backgroundImage = `url('${heroImgs[currentHeroIdx]}')`;
+        }, 5000);
+
+        function toggleLight() {
+            const dimmer = document.getElementById('dimmer');
+            dimmer.style.display = dimmer.style.display === 'block' ? 'none' : 'block';
         }
 
-        function skipVideo(sec) { video.currentTime += sec; }
-
-        function updateProgress() {
-            if (video.duration) {
-                const percentage = (video.currentTime / video.duration) * 100;
-                progressFilled.style.width = percentage + '%';
-            }
+        function likeVideo(btn) {
+            btn.classList.toggle('liked');
+            let count = parseInt(document.getElementById('likeCount').innerText);
+            document.getElementById('likeCount').innerText = btn.classList.contains('liked') ? "1,201" : "1,200";
         }
 
-        function setProgress(e) {
-            const rect = e.target.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const percentage = x / rect.width;
-            video.currentTime = percentage * video.duration;
+        function shareVideo() {
+            const url = window.location.href;
+            const text = "شاهد هذه الحلقة الرائعة على كرتون بلس!";
+            alert("تم نسخ الرابط! يمكنك مشاركته عبر واتساب، تيليغرام، وانستغرام:\n" + url);
         }
+
+        function addToFav() { alert("تمت إضافة الحلقة إلى مفضلاتك بنجاح!"); }
+
+        // تشغيل أحدث حلقة
+        function openLatest() { openPlayer(episodes[0].url, episodes[0].title, episodes[0].desc); }
+
+        // البدء
+        renderEpisodes(episodes);
     </script>
-
 </body>
 </html>
